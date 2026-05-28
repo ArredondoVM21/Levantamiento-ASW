@@ -1,0 +1,152 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Dashboard - Control de Finanzas{% endblock %}
+
+{% block content %}
+<div class="container mt-5 pt-4">
+
+  <!-- Encabezado -->
+  <div class="text-center mb-5">
+    <h1 class="display-5 fw-bold text-success">
+      <i class="bi bi-speedometer2 me-2"></i>
+      Dashboard de Control Financiero
+    </h1>
+
+    <p class="text-muted fs-5 mb-2">
+      Bienvenido, <strong>{{ user.username }}</strong>
+    </p>
+
+    <p class="text-muted fst-italic">
+      Supervisa presupuestos, ítems, reportes y cuentas por pagar desde un solo panel.
+    </p>
+
+    <hr class="w-25 mx-auto text-success opacity-75">
+  </div>
+
+  <!-- Tarjetas principales -->
+  <div class="row g-4 justify-content-center">
+
+    <!-- Presupuestos -->
+    <div class="col-md-6 col-lg-5">
+      <div class="card h-100 shadow border-0 rounded-4 hover-shadow">
+        <div class="card-body text-center p-4">
+
+          <div class="mb-3">
+            <img src="https://i.ibb.co/cSQVsh1c/presupuestos.png"
+                 alt="Presupuesto" class="img-fluid" style="width: 75px;">
+          </div>
+
+          <h4 class="fw-bold text-primary mb-2">Presupuestos</h4>
+          <p class="text-muted">
+            Crear, editar y administrar presupuestos mensuales.
+          </p>
+
+          <div class="d-grid gap-2 mt-3">
+            <a href="{% url 'crear_presupuesto' %}" class="btn btn-outline-primary btn-sm">
+              <i class="bi bi-plus-circle"></i> Crear Presupuesto
+            </a>
+            <a href="{% url 'lista_presupuestos' %}" class="btn btn-primary btn-sm">
+              <i class="bi bi-list-ul"></i> Ver Listado
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Ítems -->
+    <div class="col-md-6 col-lg-5">
+      <div class="card h-100 shadow border-0 rounded-4 hover-shadow">
+        <div class="card-body text-center p-4">
+
+          <div class="mb-3">
+            <img src="https://i.ibb.co/pv1bMYvN/categorias.png"
+                 alt="Ítems" class="img-fluid" style="width: 75px;">
+          </div>
+
+          <h4 class="fw-bold text-success mb-2">Ítems de Presupuesto</h4>
+          <p class="text-muted">
+            Administrar items y elementos asociados.
+          </p>
+
+          <div class="d-grid gap-2 mt-3">
+            <a href="{% url 'crear_item' %}" class="btn btn-outline-success btn-sm">
+              <i class="bi bi-plus-circle"></i> Crear Ítem
+            </a>
+            <a href="{% url 'lista_items' %}" class="btn btn-success btn-sm">
+              <i class="bi bi-list-ul"></i> Ver Listado
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Informes -->
+    <div class="col-md-6 col-lg-5">
+      <div class="card h-100 shadow border-0 rounded-4 hover-shadow">
+        <div class="card-body text-center p-4">
+
+          <div class="mb-3">
+            <img src="https://i.ibb.co/0j36vqR1/analytics-12095948-4.png"
+                 alt="Reportes" class="img-fluid" style="width: 75px;">
+          </div>
+
+          <h4 class="fw-bold text-dark mb-2">Informes y Reportes</h4>
+          <p class="text-muted">
+            Obter reportes PDF y Excel con información detallada.
+          </p>
+
+          <div class="d-grid mt-3">
+            <a href="{% url 'informes' %}" class="btn btn-dark btn-sm">
+              <i class="bi bi-bar-chart"></i> Abrir Informes
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- Cuentas por pagar -->
+    <div class="col-md-6 col-lg-5">
+      <div class="card h-100 shadow border-0 rounded-4 hover-shadow">
+        <div class="card-body text-center p-4">
+
+          <div class="mb-3">
+            <img src="https://i.ibb.co/wFY0myM2/payment-6091932.png"
+                 alt="Cuentas por pagar" class="img-fluid" style="width: 75px;">
+          </div>
+
+          <h4 class="fw-bold text-danger mb-2">Cuentas por Pagar</h4>
+          <p class="text-muted">
+            Registrar boletas, control vencimientos y administrar pagos pendientes.
+          </p>
+
+          <div class="d-grid gap-2 mt-3">
+            <a href="{% url 'crear_cuenta' %}" class="btn btn-outline-danger btn-sm">
+              <i class="bi bi-plus-circle"></i> Registrar Cuenta
+            </a>
+            <a href="{% url 'lista_cuentas' %}" class="btn btn-danger btn-sm">
+              <i class="bi bi-list-ul"></i> Ver Listado
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<style>
+  .hover-shadow {
+    transition: all .3s ease;
+  }
+  .hover-shadow:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 .7rem 1.3rem rgba(0,0,0,0.18);
+  }
+</style>
+
+{% endblock %}

@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Detalle del Ítem{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="text-center mb-4">
+    <h2 class="fw-bold text-success">Detalle del Ítem Presupuestario</h2>
+    <p class="text-muted">Consulta la información completa del ítem seleccionado</p>
+  </div>
+
+  <div class="card border-0 shadow-lg rounded-4 mx-auto" style="max-width: 600px;">
+    <div class="card-body p-4">
+      <div class="text-center mb-3">
+        <i class="bi bi-cash text-success" style="font-size: 3rem;"></i>
+        <h4 class="mt-2 fw-semibold text-success">{{ item.nombre }}</h4>
+      </div>
+
+      <hr>
+
+      <div class="mb-2">
+        <p><strong><i class="bi bi-info-circle me-2 text-success"></i>Descripción:</strong></p>
+        <p class="bg-light p-3 rounded">{{ item.descripcion|default:"Sin descripción" }}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-4">
+    <a href="{% url 'lista_items' %}" class="btn btn-outline-success me-2">
+      <i class="bi bi-arrow-left"></i> Volver al listado
+    </a>
+
+    <!-- editar usa pk -->
+    <a href="{% url 'editar_item' item.pk %}" class="btn btn-warning me-2 text-white">
+      <i class="bi bi-pencil-square"></i> Editar
+    </a>
+
+    <!-- eliminar usa pk -->
+    <a href="{% url 'eliminar_item' item.pk %}" class="btn btn-danger">
+      <i class="bi bi-trash"></i> Eliminar
+    </a>
+  </div>
+</div>
+{% endblock %}

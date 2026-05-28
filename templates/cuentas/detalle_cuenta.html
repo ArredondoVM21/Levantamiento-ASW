@@ -1,0 +1,79 @@
+{% extends "base.html" %}
+{% block title %}Detalle de Cuenta{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+  <!-- Título principal -->
+  <div class="text-center mb-4">
+    <h2 class="fw-bold text-danger">Detalle de la Cuenta por Pagar</h2>
+    <p class="text-muted">Consulta toda la información registrada de esta cuenta</p>
+  </div>
+
+  <!-- Tarjeta principal -->
+  <div class="card border-0 shadow-lg rounded-4 mx-auto" style="max-width: 650px;">
+    <div class="card-body p-4">
+
+      <div class="text-center mb-3">
+        <i class="bi bi-receipt-cutoff text-danger" style="font-size: 3.3rem;"></i>
+        <h4 class="mt-2 fw-semibold text-danger">
+          Boleta {{ cuenta.numero_boleta }}
+        </h4>
+      </div>
+
+      <hr>
+
+      <!-- Monto -->
+      <p class="mb-2">
+        <strong><i class="bi bi-cash-coin me-2 text-danger"></i>Monto:</strong>
+        <span class="ms-1">${{ cuenta.monto|floatformat:"0" }}</span>
+      </p>
+
+      <!-- Fechas -->
+      <p class="mb-2">
+        <strong><i class="bi bi-calendar-event me-2 text-danger"></i>Fecha emisión:</strong>
+        {{ cuenta.fecha_emision }}
+      </p>
+
+      <p class="mb-2">
+        <strong><i class="bi bi-calendar-x me-2 text-danger"></i>Fecha vencimiento:</strong>
+        {{ cuenta.fecha_vencimiento }}
+      </p>
+
+      <!-- Días restantes -->
+      <p class="mb-3">
+        <strong><i class="bi bi-hourglass-split me-2 text-danger"></i>Días restantes:</strong>
+
+        {% if cuenta.dias_restantes < 0 %}
+          <span class="badge bg-danger">{{ cuenta.dias_restantes }}</span>
+        {% elif cuenta.dias_restantes <= 3 %}
+          <span class="badge bg-warning text-dark">{{ cuenta.dias_restantes }}</span>
+        {% else %}
+          <span class="badge bg-success">{{ cuenta.dias_restantes }}</span>
+        {% endif %}
+      </p>
+
+      <!-- Descripción -->
+      <div class="mb-2">
+        <p><strong><i class="bi bi-info-circle me-2 text-danger"></i>Descripción:</strong></p>
+        <p class="bg-light p-3 rounded">
+          {{ cuenta.descripcion|default:"Sin descripción" }}
+        </p>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Botones -->
+  <div class="text-center mt-4">
+    <a href="{% url 'lista_cuentas' %}" class="btn btn-outline-danger me-2">
+      <i class="bi bi-arrow-left"></i> Volver al listado
+    </a>
+
+    <a href="{% url 'editar_cuenta' cuenta.pk %}" class="btn btn-warning text-white">
+      <i class="bi bi-pencil-square"></i> Editar
+    </a>
+  </div>
+
+</div>
+{% endblock %}

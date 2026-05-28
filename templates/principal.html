@@ -1,0 +1,149 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}Secreto Helado - Inicio{% endblock %}
+
+{% block content %}
+
+<div id="carouselSecretoWrapper" class="position-relative">
+    <div id="carouselSecreto" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-indicators">
+            <button type="button" data-bs-target="#carouselSecreto" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#carouselSecreto" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#carouselSecreto" data-bs-slide-to="2"></button>
+            <button type="button" data-bs-target="#carouselSecreto" data-bs-slide-to="3"></button>
+            <button type="button" data-bs-target="#carouselSecreto" data-bs-slide-to="4"></button>
+        </div>
+
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="https://i.ibb.co/sJsnKLHw/jugo10.webp" class="d-block w-100 carousel-img" alt="Jugo Principal">
+            </div>
+            <div class="carousel-item">
+                <img src="https://i.ibb.co/zTZGvg1s/carrusel0.webp" class="d-block w-100 carousel-img" alt="Heladería">
+            </div>
+            <div class="carousel-item">
+                <img src="https://i.ibb.co/3Y7cLng5/torta0.jpg" class="d-block w-100 carousel-img" alt="Tortas">
+            </div>
+            <div class="carousel-item">
+                <img src="https://i.ibb.co/PGWRBG4N/carrusel2.png" class="d-block w-100 carousel-img" alt="Local">
+            </div>
+            <div class="carousel-item">
+                <img src="https://i.ibb.co/d4QpKxCr/helado11.jpg" class="d-block w-100 carousel-img" alt="Helado">
+            </div>
+        </div>
+
+        <button class="carousel-control-prev" type="button" data-bs-target="#carouselSecreto" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselSecreto" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+        </button>
+    </div>
+
+    <div class="position-absolute top-50 start-50 translate-middle text-center text-white welcome-text">
+        <h1 class="fw-bold display-5">Bienvenido a Secreto Helado Artesanal</h1>
+        <p class="lead">Descubre nuestros helados artesanales, preparados con dedicación y amor familiar.</p>
+    </div>
+</div>
+
+<div class="container mt-5">
+
+    <section id="historia" class="text-center mb-5">
+        <h2 class="fw-semibold">Nuestra Historia</h2>
+        <p class="lead">
+            Secreto Heladería nació como idea en 2013, pero no prosperó en ese momento. En 2020, durante la pandemia, 
+            los fundadores retomaron el proyecto como emprendimiento familiar desde su hogar, vendiendo helados en potes a domicilio. 
+            En mayo de 2024 abrieron su local físico en <strong>Gabriel González Videla 2777, La Serena</strong>. 
+            Desde entonces, han crecido gracias al boca a boca y redes sociales.
+        </p>
+    </section>
+
+    <section id="principios" class="my-5">
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card text-center h-100 border-0 shadow-sm" style="background-color: #f2f2f2;">
+                    <div class="card-body">
+                        <h3 class="fw-semibold text-primary">Misión</h3>
+                        <p>Ofrecer helados artesanales de alta calidad, elaborados con ingredientes naturales, en un ambiente familiar.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center h-100 border-0 shadow-sm text-white" style="background-color: #c97a7a;">
+                    <div class="card-body">
+                        <h3 class="fw-semibold">Visión</h3>
+                        <p>Ser la heladería artesanal referente en la región, reconocida por calidad, innovación y calidez.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-center h-100 border-0 shadow-sm" style="background-color: #f5f0e6;">
+                    <div class="card-body">
+                        <h3 class="fw-semibold text-success">Valores</h3>
+                        <p>Calidad artesanal, atención personalizada e innovación en sabores con espíritu familiar.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="productos" class="text-center py-5 bg-light">
+        <h2 class="fw-bold text-danger mb-4">Nuestros Productos</h2>
+        <div class="row g-4">
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0">
+                    <img src="https://i.ibb.co/N6m2hbzy/helado1.png" class="card-img-top" alt="Helados">
+                    <div class="card-img-overlay d-flex align-items-end">
+                        <h5 class="w-100 text-center bg-dark bg-opacity-75 text-white py-2">Helados</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0">
+                    <img src="https://i.ibb.co/B23Vfsrf/torta1.webp" class="card-img-top" alt="Pasteles">
+                    <div class="card-img-overlay d-flex align-items-end">
+                        <h5 class="w-100 text-center bg-dark bg-opacity-75 text-white py-2">Pasteles</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0">
+                    <img src="https://i.ibb.co/0RTC5XMc/bebida3.webp" class="card-img-top" alt="Bebidas">
+                    <div class="card-img-overlay d-flex align-items-end">
+                        <h5 class="w-100 text-center bg-dark bg-opacity-75 text-white py-2">Bebidas</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="card shadow-sm border-0">
+                    <img src="https://i.ibb.co/6cMrjCyS/jugo9.jpg" class="card-img-top" alt="Jugos">
+                    <div class="card-img-overlay d-flex align-items-end">
+                        <h5 class="w-100 text-center bg-dark bg-opacity-75 text-white py-2">Jugos</h5>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="presentacion" class="my-5">
+        <div class="row align-items-center">
+            <div class="col-md-6">
+                <h2 class="fw-bold text-danger">Nuestra Dulzura</h2>
+                <p class="lead">
+                    En Secreto Helado, cada producto transmite dedicación y amor familiar. 
+                    Usamos ingredientes frescos y recetas artesanales que evocan recuerdos.
+                </p>
+                <p>
+                    Queremos que cada visita sea especial y que cada cliente se sienta parte de nuestra gran familia.
+                </p>
+            </div>
+            <div class="col-md-6 text-center">
+                <img src="https://i.ibb.co/VYJcZmjJ/localsecreto.webp" class="img-fluid rounded shadow" alt="Local Secreto Helado">
+            </div>
+        </div>
+    </section>
+
+</div>
+
+{% endblock %}

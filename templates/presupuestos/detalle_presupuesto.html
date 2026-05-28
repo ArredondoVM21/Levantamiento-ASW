@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow-sm">
+    <div class="card-header bg-primary text-white">
+      <h4>Detalles del Presupuesto</h4>
+    </div>
+    <div class="card-body">
+      <p><strong>Año:</strong> {{ presupuesto.anio }}</p>
+      <p><strong>Mes:</strong> {{ presupuesto.mes }}</p>
+      <p><strong><i class="bi bi-cash text-success me-2"></i>Monto Total Asignado:</strong>
+        ${{ monto_total_asignado|floatformat:0 }}
+      </p>
+      <hr>
+      <h5>Ítems Asociados</h5>
+      {% if detalles %}
+      <table class="table table-bordered mt-3">
+        <thead class="table-light">
+          <tr>
+            <th>Ítem</th>
+            <th>Descripción</th>
+            <th>Monto</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for detalle in detalles %}
+          <tr>
+            <td>{{ detalle.item.nombre }}</td>
+            <td>{{ detalle.item.descripcion }}</td>
+            <td>${{ detalle.monto_limite|floatformat:0 }}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <p>No hay ítems asociados a este presupuesto.</p>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="mt-3 d-flex gap-2">
+    <a href="{% url 'lista_presupuestos' %}" class="btn btn-secondary">
+      <i class="bi bi-arrow-left-circle"></i> Volver
+    </a>
+    <a href="{% url 'editar_presupuesto' presupuesto.id %}" class="btn btn-warning text-white">
+      <i class="bi bi-pencil-square"></i> Editar
+    </a>
+    <a href="{% url 'eliminar_presupuesto' presupuesto.id %}" class="btn btn-danger">
+      <i class="bi bi-trash"></i> Eliminar
+    </a>
+  </div>
+</div>
+{% endblock %}
+

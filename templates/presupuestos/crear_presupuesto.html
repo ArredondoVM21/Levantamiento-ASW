@@ -1,0 +1,153 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block title %}Crear Presupuesto{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow-sm border-0 rounded-4">
+    <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+      <h4 class="mb-0"><i class="bi bi-plus-circle me-2"></i>Crear Presupuesto</h4>
+    </div>
+
+    <div class="card-body p-4">
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show text-center" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      <!-- ERRORES DEL FORM PRINCIPAL -->
+      {% if form.errors %}
+        <div class="alert alert-danger">
+          <ul class="mb-0">
+            {% for field in form %}
+              {% for error in field.errors %}
+                <li>{{ field.label }}: {{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+        {{ formset.management_form }}
+
+        <!-- Datos principales -->
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold"><i class="bi bi-calendar-date text-primary me-2"></i>Fecha de Creación</label>
+            {{ form.fecha }}
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold"><i class="bi bi-calendar3 text-primary me-2"></i>Mes</label>
+            {{ form.mes }}
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold"><i class="bi bi-calendar2-week text-primary me-2"></i>Año</label>
+            {{ form.anio }}
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-semibold"><i class="bi bi-card-text text-secondary me-2"></i>Descripción</label>
+          {{ form.descripcion }}
+        </div>
+
+        <hr>
+        <h5 class="fw-bold text-primary"><i class="bi bi-list-ul me-2"></i>Ítems del Presupuesto</h5>
+
+        <!-- Tabla de ítems -->
+        <div class="table-responsive mt-3">
+          <table class="table table-hover align-middle text-center shadow-sm rounded-3 overflow-hidden">
+            <thead class="table-light">
+              <tr>
+                <th>Ítem</th>
+                <th>Monto</th>
+                <th>Eliminar</th>
+              </tr>
+            </thead>
+            <tbody id="formsetContainer">
+              {% for subform in formset %}
+              <tr>
+                {{ subform.id }} <!-- Campo oculto -->
+                <td>{{ subform.item }}</td>
+                <td>{{ subform.monto_limite }}</td>
+                <td>
+                  <button type="button" class="btn btn-danger btn-sm remove-row">
+                    <i class="bi bi-x"></i>
+                  </button>
+                </td>
+              </tr>
+
+              {% if subform.errors %}
+              <tr>
+                <td colspan="3" class="text-danger small">
+                  {% for field, errors in subform.errors.items %}
+                    {{ field }}: {{ errors|join:", " }}<br>
+                  {% endfor %}
+                </td>
+              </tr>
+              {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="text-center mt-3">
+          <button type="button" id="addItemBtn" class="btn btn-outline-primary">
+            <i class="bi bi-plus-circle"></i> Agregar Ítem
+          </button>
+        </div>
+
+        <div class="d-flex justify-content-center gap-3 mt-4">
+          <button type="submit" class="btn btn-primary px-4">
+            <i class="bi bi-save"></i> Guardar Presupuesto
+          </button>
+          <a href="{% url 'lista_presupuestos' %}" class="btn btn-outline-secondary px-4">
+            <i class="bi bi-x-circle"></i> Salir
+          </a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- JS para formset dinámico -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const formsetContainer = document.getElementById("formsetContainer");
+  const addItemBtn = document.getElementById("addItemBtn");
+
+  addItemBtn.addEventListener("click", function() {
+    const totalFormsInput = document.querySelector('input[name$="-TOTAL_FORMS"]');
+    const currentFormCount = parseInt(totalFormsInput.value, 10);
+
+    const prototypeRow = formsetContainer.querySelector("tr");
+    if (!prototypeRow) return;
+
+    const newForm = prototypeRow.cloneNode(true);
+    newForm.querySelectorAll("input, select").forEach(el => {
+      el.name = el.name.replace(/-\d+-/, `-${currentFormCount}-`);
+      el.id = el.id.replace(/-\d+-/, `-${currentFormCount}-`);
+      el.value = "";
+    });
+
+    totalFormsInput.value = currentFormCount + 1;
+    formsetContainer.appendChild(newForm);
+  });
+
+  formsetContainer.addEventListener("click", function(e) {
+    if (e.target.closest(".remove-row")) {
+      e.target.closest("tr").remove();
+    }
+  });
+});
+</script>
+{% endblock %}

@@ -1,0 +1,189 @@
+{% extends "base.html" %}
+{% block title %}Editar Presupuesto{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+  <div class="card shadow-sm border-0 rounded-4">
+    <div class="card-header bg-warning text-white d-flex justify-content-between align-items-center">
+      <h4 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Editar Presupuesto</h4>
+    </div>
+
+    <div class="card-body p-4">
+
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-{{ message.tags }} alert-dismissible fade show text-center" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
+
+      {% if form.errors %}
+        <div class="alert alert-danger">
+          <ul>
+            {% for field in form %}
+              {% for error in field.errors %}
+                <li>{{ field.label }}: {{ error }}</li>
+              {% endfor %}
+            {% endfor %}
+            {% for error in form.non_field_errors %}
+              <li>{{ error }}</li>
+            {% endfor %}
+          </ul>
+        </div>
+      {% endif %}
+
+      <form method="post" novalidate>
+        {% csrf_token %}
+
+        {{ formset.management_form }}
+
+        {% if formset.non_form_errors %}
+          <div class="alert alert-danger text-center">
+            {% for error in formset.non_form_errors %}
+              <p>{{ error }}</p>
+            {% endfor %}
+          </div>
+        {% endif %}
+
+        <div class="row mb-4">
+          <div class="col-md-6">
+            <label class="form-label fw-semibold">Fecha</label>
+            {{ form.fecha }}
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Mes</label>
+            {{ form.mes }}
+          </div>
+          <div class="col-md-3">
+            <label class="form-label fw-semibold">Año</label>
+            {{ form.anio }}
+          </div>
+        </div>
+
+        <div class="mb-4">
+          <label class="form-label fw-semibold">Descripción</label>
+          {{ form.descripcion }}
+        </div>
+
+        <hr>
+        <h5 class="fw-bold text-warning">Ítems Asociados</h5>
+
+        <div class="table-responsive mt-3">
+          <table class="table table-hover align-middle text-center shadow-sm rounded-3">
+            <thead class="table-light">
+              <tr>
+                <th>Ítem</th>
+                <th>Monto</th>
+                <th>Eliminar</th>
+              </tr>
+            </thead>
+
+            <tbody id="formsetContainer">
+              {% for subform in formset %}
+              <tr>
+
+                {% for hidden in subform.hidden_fields %}
+                  {{ hidden }}
+                {% endfor %}
+
+                <td>{{ subform.item }}</td>
+
+                <td>{{ subform.monto_limite }}</td>
+
+                <td>
+                  {% if subform.DELETE %}
+                    <div style="display:none;">
+                      {{ subform.DELETE }}
+                    </div>
+                    <button type="button" class="btn btn-danger btn-sm remove-row">
+                      <i class="bi bi-x"></i>
+                    </button>
+                  {% endif %}
+                </td>
+              </tr>
+
+              {% if subform.errors %}
+              <tr>
+                <td colspan="3" class="text-danger small">
+                  {% for field, errors in subform.errors.items %}
+                    {{ field }}: {{ errors|join:", " }}<br>
+                  {% endfor %}
+                </td>
+              </tr>
+              {% endif %}
+              {% endfor %}
+            </tbody>
+          </table>
+        </div>
+
+        <div class="text-center mt-3">
+          <button type="button" id="addItemBtn" class="btn btn-outline-warning">
+            <i class="bi bi-plus-circle"></i> Agregar Ítem
+          </button>
+        </div>
+
+        <div class="d-flex justify-content-center gap-3 mt-4">
+          <button type="submit" class="btn btn-warning px-4 text-white">
+            <i class="bi bi-save"></i> Guardar Cambios
+          </button>
+          <a href="{% url 'lista_presupuestos' %}" class="btn btn-outline-secondary px-4">
+            <i class="bi bi-x-circle"></i> Cancelar
+          </a>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+  const formsetContainer = document.getElementById("formsetContainer");
+  const addItemBtn = document.getElementById("addItemBtn");
+  const totalFormsInput = document.querySelector('input[name$="-TOTAL_FORMS"]');
+
+  // ELIMINAR FILA
+  formsetContainer.addEventListener("click", function(e) {
+    const btn = e.target.closest(".remove-row");
+    if (btn) {
+      const row = btn.closest("tr");
+      const deleteInput = row.querySelector('input[name$="-DELETE"]');
+
+      if (deleteInput) {
+        deleteInput.checked = true;
+      }
+
+      row.style.display = "none";
+    }
+  });
+
+  // AGREGAR FILA
+  addItemBtn.addEventListener("click", function() {
+    const currentFormCount = parseInt(totalFormsInput.value);
+    const firstRow = formsetContainer.querySelector("tr");
+
+    const newRow = firstRow.cloneNode(true);
+
+    newRow.querySelectorAll("input, select").forEach(el => {
+      if (el.name) {
+        el.name = el.name.replace(/-\d+-/, `-${currentFormCount}-`);
+        el.id = el.id.replace(/-\d+-/, `-${currentFormCount}-`);
+      }
+
+      if (el.type !== "hidden") el.value = "";
+
+      if (el.name && el.name.endsWith("DELETE")) {
+        el.checked = false;
+      }
+    });
+
+    totalFormsInput.value = currentFormCount + 1;
+    formsetContainer.appendChild(newRow);
+  });
+});
+</script>
+
+{% endblock %}

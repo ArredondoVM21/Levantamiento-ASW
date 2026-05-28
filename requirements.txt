@@ -1,0 +1,10 @@
+Django
+Pillow
+python-dotenv
+PyMySQL
+django-crispy-forms
+crispy-bootstrap5
+mysqlclient
+django-bootstrap5
+openpyxl
+reportlab
