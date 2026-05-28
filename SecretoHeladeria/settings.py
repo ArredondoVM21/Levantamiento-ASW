@@ -10,9 +10,9 @@ DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
 ALLOWED_HOSTS = [
     '.render.com',
+    'secreto-heladeria-c1kh.onrender.com',
     'localhost',
     '127.0.0.1',
-    'secreto-heladeria-c1kh.onrender.com'   # ← Agregar esta línea
 ]
 
 # ==================== INSTALLED APPS ====================
@@ -76,6 +76,21 @@ DATABASES = {
         'PORT': os.environ.get('DB_PORT', '5432'),
     }
 }
+
+# ==================== SECURITY SETTINGS PARA PRODUCCIÓN ====================
+SECURE_SSL_REDIRECT = True
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
+
+SECURE_HSTS_SECONDS = 31536000
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+X_FRAME_OPTIONS = 'DENY'
 
 # ==================== AUTH & INTERNATIONALIZATION ====================
 AUTH_PASSWORD_VALIDATORS = [
