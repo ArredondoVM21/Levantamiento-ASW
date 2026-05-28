@@ -8,7 +8,12 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 DEBUG = os.environ.get('DEBUG', 'False') == 'True'
 
-ALLOWED_HOSTS = ['.render.com', 'localhost', '127.0.0.1']
+ALLOWED_HOSTS = [
+    '.render.com',
+    'localhost',
+    '127.0.0.1',
+    'secreto-heladeria-c1kh.onrender.com'   # ← Agregar esta línea
+]
 
 # ==================== INSTALLED APPS ====================
 INSTALLED_APPS = [
